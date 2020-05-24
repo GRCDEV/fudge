@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+  <head>
+	<title>FEDGE/MessApp</title>
+	<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/myown.css') }}">
+  <style>
+      body {
+      margin: 0;
+      }
+      .navbar {
+      overflow: hidden;
+      background-color: #0496ff;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      }
+      .navbar a {
+      float: left;
+      display: block;
+      color: #eeeeee;
+      text-align: center;
+      padding: 15px 18px;
+      text-decoration: none;
+      font-size: 18px;
+      }
+      .navbar a:hover {
+      color: #d81159;
+      }
+      .container {
+      padding: 18px;
+      margin-top: 35px;
+      height: 2000px;
+      }
+  </style>	
+  </head>
+
+<body>
+
+	<div class="navbar">
+		<a href="/">Home</a>
+		<a href="/register">Register</a>
+		<a href="/login">Login</a>
+		<a href="/sendmsg">Send Msg</a>
+		<a href="/getmsg">Check Msg</a>
+		<a href="/logout">Logout</a>
+    <img src="{{ url_for('static',filename='figs/logogrc.png') }}" alt="GRC" height="42" width="42" style="float: right;">
+	</div>
+
+  <div class="container">
+	{% block content %}
+	{% endblock %}
+	</div>
+	</body>
+</html>

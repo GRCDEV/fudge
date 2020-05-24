@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Get messages</h1>
+<h2>user: {{ uname }}</h2>
+<hr>
+
+{% if feedback %}
+<p style="color:red;">{{ feedback }}</p>
+{% endif %}
+
+<form action="/getmsg" method="POST">
+
+  <button type="submit">Check for messages</button>
+
+</form>
+
+{%if inmessages %}
+<b>Messages received:</b></br>
+{% for msg in inmessages %}
+<p>Message from: {{msg.tags.sender}} @ {{msg.tags.time}}</p>
+<p style="color:blue;">{{ msg.fields.message }}</p>
+{% endfor %}
+{% endif %}
+
+
+{% endblock %}
