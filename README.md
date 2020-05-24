@@ -1,2 +1,1 @@
-# fudge
-FUDGE: a frugal edge node for IoT deployment in remote areas
+# FUDGE: a frugal edge node for IoT deployment in remote areas
