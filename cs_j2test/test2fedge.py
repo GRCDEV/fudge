@@ -15,7 +15,7 @@ TTOPIC  = "rpired/testcs/L/P"
 
 
 def random_chars_string(l=5):
-	return ''.join(random.choice(string.ascii_letters) for x in range(y))
+    return ''.join(random.choice(string.ascii_letters) for x in range(y))
 
 
 def on_connect(client, userdata, flags, rc):
@@ -25,23 +25,23 @@ def on_connect(client, userdata, flags, rc):
 
 if __name__ == "__main__":
 
-	ICDELAY = 15		# inter content delay; default value 15 seconds
-	CSIZE  = 100		# content size; default value 100 bytes
-	try:
-	   opts, args = getopt.getopt(sys.argv[1:],"hd:s:",["delay=","size="])
-	except getopt.GetoptError:
-	   print ('test.py -d <inter content delay> -s <content size>')
-	   sys.exit(2)
-	for opt, arg in opts:
-	   if opt == '-h':
-	      print ('test.py -d <val1> -s <val2>')
-	      sys.exit()
-	   elif opt in ("-d", "--delay"):
-	      ICDELAY = arg
-	   elif opt in ("-s", "--size"):
-	      CSIZE = arg
-	print ('inter content delay =', ICDELAY)
-	print ('content size =', CSIZE)
+    ICDELAY = 15        # inter content delay; default value 15 seconds
+    CSIZE  = 100        # content size; default value 100 bytes
+    try:
+       opts, args = getopt.getopt(sys.argv[1:],"hd:s:",["delay=","size="])
+    except getopt.GetoptError:
+       print ('test.py -d <inter content delay> -s <content size>')
+       sys.exit(2)
+    for opt, arg in opts:
+       if opt == '-h':
+          print ('test.py -d <val1> -s <val2>')
+          sys.exit()
+       elif opt in ("-d", "--delay"):
+          ICDELAY = arg
+       elif opt in ("-s", "--size"):
+          CSIZE = arg
+    print ('inter content delay =', ICDELAY)
+    print ('content size =', CSIZE)
 
     try:
         mqttc = mqtt.Client(client_id=MQTTID, clean_session=True)
@@ -58,16 +58,16 @@ if __name__ == "__main__":
 
     while True:
 
-    	devid = random.randint(0,9)				# Creating a random device
-    	rndcont = random_chars_string(CSIZE)	# Creating a random content
+        devid = random.randint(0,9)             # Creating a random device
+        rndcont = random_chars_string(CSIZE)    # Creating a random content
 
         payload = {
             "measurement": "ruuvis",
             "tags": {"devid": devid
             },
             "fields": { 
-            	"len": CSIZE,
-            	"cnt": rndcont
+                "len": CSIZE,
+                "cnt": rndcont
             }
 
         }
