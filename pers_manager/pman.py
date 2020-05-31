@@ -93,6 +93,7 @@ def on_message(mqttc, userdata, msg):
         	print("XXXXX======", tval)
         	with open('logf.txt', "w") as f:
         		f.write(tval)
+        	sys.exit()
         #
         # 
         #
