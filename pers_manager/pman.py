@@ -90,7 +90,7 @@ def on_message(mqttc, userdata, msg):
         #
         if (top[1]=='testcs'):
         	tval = time.time() - jrecord[0]["fields"]["tim"]
-        	with open('logf.txt', "w") as f:
+        	with open('logf.txt', "a") as f:
         		f.write(str(tval))
         #
         # 
