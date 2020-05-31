@@ -89,7 +89,7 @@ def on_message(mqttc, userdata, msg):
         # to be used by testcs and performance evaluation
         #
         if (top[2]=="testcs"):
-        	print(jrecord["fields"]["tim"])
+        	print("XXXXX======", jrecord["fields"]["tim"])
         	with open('logf.txt') as f:
         		f.write(time.time())
         #
