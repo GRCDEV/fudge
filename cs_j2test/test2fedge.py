@@ -36,11 +36,11 @@ if __name__ == "__main__":
           print ('test.py -d <val1> -s <val2> -r <val3>')
           sys.exit()
        elif opt in ("-d", "--delay"):
-          ICDELAY = arg
+          ICDELAY = int(arg)
        elif opt in ("-s", "--size"):
-          CSIZE = arg
+          CSIZE = int(arg)
        elif opt in ("-r", "--rep"):
-          REPT = arg
+          REPT = int(arg)
     print ('inter content delay =', ICDELAY)
     print ('content size =', CSIZE)
     print ('number of repetitions =', REPT)
