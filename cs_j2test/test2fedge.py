@@ -5,7 +5,6 @@ import string
 import sys
 import getopt
 
-
 from influxdb import InfluxDBClient
 import paho.mqtt.client as mqtt
 
@@ -16,7 +15,6 @@ TTOPIC  = "rpired/testcs/L/P"
 
 def random_chars_string(l=5):
     return ''.join(random.choice(string.ascii_letters) for x in range(l))
-
 
 def on_connect(client, userdata, flags, rc):
     print("Connected to ", client._host, "port: ", client._port)
@@ -62,10 +60,11 @@ if __name__ == "__main__":
         rndcont = random_chars_string(CSIZE)    # Creating a random content
 
         payload = {
-            "measurement": "ruuvis",
+            "measurement": "testcs",
             "tags": {"devid": devid
             },
             "fields": { 
+                "tim": time.time(),
                 "len": CSIZE,
                 "cnt": rndcont
             }
