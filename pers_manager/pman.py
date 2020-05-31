@@ -96,6 +96,7 @@ def on_message(mqttc, userdata, msg):
         # 
         #
     elif (top[3]=='X') and (top[4]=='request'):
+    	# a more general handling of this case is necessary...
         read_from_db_messapp(msg.topic, msg.payload)
     else:
         pass # nothing to do
