@@ -47,10 +47,9 @@ def read_from_db_messapp(topic, payload):
 
 
 def create_json_data(topic, payload):
-    print(topic, payload)
+    if DEBUG_MSG_ON: print(topic, payload)
     pload = json.loads(payload)
-
-    print(pload)
+    if DEBUG_MSG_ON: print(pload)
 
     now_time = datetime.now(timezone.utc).astimezone()
 
@@ -79,13 +78,24 @@ def on_message(mqttc, userdata, msg):
     top = msg.topic.split('/')
     if (top[3]=='P'):    # Checking if data must be made persistent
         jrecord = create_json_data(msg.topic, msg.payload)
-        print("PERSISTING :) ", jrecord)
+        if DEBUG_MSG_ON or True: print("PERSISTING :) ", jrecord)
         try:
             clientIX.write_points(jrecord, database=IXDB, protocol='json')
         except Exception as e:
             print("Something went wrong during 'write_points' InfluxDB DB")
             print(e)
+        #
+        # to be used by testcs and performance evaluation
+        #
+        if (top[1]=='testcs'):
+        	tval = time.time() - jrecord[0]["fields"]["tim"]
+        	with open('logf.txt', "a") as f:
+        		f.write(str(tval)+'\n')
+        #
+        # 
+        #
     elif (top[3]=='X') and (top[4]=='request'):
+    	# a more general handling of this case is necessary...
         read_from_db_messapp(msg.topic, msg.payload)
     else:
         pass # nothing to do
