@@ -15,7 +15,7 @@ TTOPIC  = "rpired/testcs/L/P"
 
 
 def random_chars_string(l=5):
-    return ''.join(random.choice(string.ascii_letters) for x in range(y))
+    return ''.join(random.choice(string.ascii_letters) for x in range(l))
 
 
 def on_connect(client, userdata, flags, rc):
