@@ -1,17 +1,22 @@
 import random
 import time
 import json
+import string
+import sys
+import getopt
+
 
 from influxdb import InfluxDBClient
-from ruuvitag_sensor.ruuvitag import RuuviTag
 import paho.mqtt.client as mqtt
 
-# My ruuvi's MAC addresses:
-RTAGS = ["F4:AF:92:D9:7C:3A", "C3:65:F4:40:E9:70", "C3:59:C9:93:81:DD"];
-
 TBROKER = "localhost"
-MQTTID  = "ruuvis"
-TTOPIC  = "rpired/ruuvis/L/P"
+MQTTID  = "testcs"
+TTOPIC  = "rpired/testcs/L/P"
+
+
+def random_chars_string(l=5):
+	return ''.join(random.choice(string.ascii_letters) for x in range(y))
+
 
 def on_connect(client, userdata, flags, rc):
     print("Connected to ", client._host, "port: ", client._port)
@@ -19,6 +24,24 @@ def on_connect(client, userdata, flags, rc):
 
 
 if __name__ == "__main__":
+
+	ICDELAY = 15		# inter content delay; default value 15 seconds
+	CSIZE  = 100		# content size; default value 100 bytes
+	try:
+	   opts, args = getopt.getopt(sys.argv[1:],"hd:s:",["delay=","size="])
+	except getopt.GetoptError:
+	   print ('test.py -d <inter content delay> -s <content size>')
+	   sys.exit(2)
+	for opt, arg in opts:
+	   if opt == '-h':
+	      print ('test.py -d <val1> -s <val2>')
+	      sys.exit()
+	   elif opt in ("-d", "--delay"):
+	      ICDELAY = arg
+	   elif opt in ("-s", "--size"):
+	      CSIZE = arg
+	print ('inter content delay =', ICDELAY)
+	print ('content size =', CSIZE)
 
     try:
         mqttc = mqtt.Client(client_id=MQTTID, clean_session=True)
@@ -31,37 +54,29 @@ if __name__ == "__main__":
         sys.exit(2)
     print("Client connected to MQTT broker", TBROKER)
 
-    sensors = []
-    for s in RTAGS:
-        sensors.append(RuuviTag(s))
-
     mqttc.loop_start()
 
     while True:
 
-        for i in range(len(sensors)):
-            # update state from the device
-            try:
-                state = sensors[i].update()
-            except Exception as e:
-                print("Something went wrong updating Ruuvi data... waiting 15 seconds and retrying")
-                print(e.message, e.args)
-                time.sleep(15)
-                continue
+    	devid = random.randint(0,9)				# Creating a random device
+    	rndcont = random_chars_string(CSIZE)	# Creating a random content
 
-            devid = RTAGS[i]
-            payload = {
-                "measurement": "ruuvis",
-                "tags": {"devid": devid
-                },
-                "fields": state
+        payload = {
+            "measurement": "ruuvis",
+            "tags": {"devid": devid
+            },
+            "fields": { 
+            	"len": CSIZE,
+            	"cnt": rndcont
             }
-            jpaylaod = json.dumps(payload)
 
-            print("Ruuvi data: ", jpaylaod)
+        }
+        jpaylaod = json.dumps(payload)
 
-            mqttc.publish(TTOPIC, payload=jpaylaod, qos=0, retain=False)
+        print("content fileds: ", jpaylaod)
 
-        time.sleep(15)
+        mqttc.publish(TTOPIC, payload=jpaylaod, qos=0, retain=False)
+
+        time.sleep(ICDELAY)
 
     mqttc.loop_stop()
