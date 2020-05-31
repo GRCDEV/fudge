@@ -91,7 +91,7 @@ def on_message(mqttc, userdata, msg):
         if (top[1]=='testcs'):
 	        print("000000000000", top[1])
         	print("XXXXX======", jrecord[0]["fields"]["tim"])
-        	with open('logf.txt') as f:
+        	with open('logf.txt', "w") as f:
         		f.write(time.time())
         #
         # 
