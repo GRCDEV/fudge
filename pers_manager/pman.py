@@ -50,7 +50,7 @@ def create_json_data(topic, payload):
     print(topic, payload)
     pload = json.loads(payload)
 
-    print(pload)
+    if DEBUG_MSG_ON: print(pload)
 
     now_time = datetime.now(timezone.utc).astimezone()
 
@@ -79,7 +79,7 @@ def on_message(mqttc, userdata, msg):
     top = msg.topic.split('/')
     if (top[3]=='P'):    # Checking if data must be made persistent
         jrecord = create_json_data(msg.topic, msg.payload)
-        print("PERSISTING :) ", jrecord)
+        if DEBUG_MSG_ON or True: print("PERSISTING :) ", jrecord)
         try:
             clientIX.write_points(jrecord, database=IXDB, protocol='json')
         except Exception as e:
