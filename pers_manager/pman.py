@@ -47,9 +47,8 @@ def read_from_db_messapp(topic, payload):
 
 
 def create_json_data(topic, payload):
-    print(topic, payload)
+    if DEBUG_MSG_ON: print(topic, payload)
     pload = json.loads(payload)
-
     if DEBUG_MSG_ON: print(pload)
 
     now_time = datetime.now(timezone.utc).astimezone()
