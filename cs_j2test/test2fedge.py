@@ -36,7 +36,7 @@ if __name__ == "__main__":
           print ('test.py -d <val1> -s <val2> -r <val3>')
           sys.exit()
        elif opt in ("-d", "--delay"):
-          ICDELAY = int(arg)
+          ICDELAY = float(arg)
        elif opt in ("-s", "--size"):
           CSIZE = int(arg)
        elif opt in ("-r", "--rep"):
