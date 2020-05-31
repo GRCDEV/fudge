@@ -85,6 +85,16 @@ def on_message(mqttc, userdata, msg):
         except Exception as e:
             print("Something went wrong during 'write_points' InfluxDB DB")
             print(e)
+        #
+        # to be used by testcs and performance evaluation
+        #
+        if (top[2]=="testcs"):
+        	print(jrecord["fields"]["tim"])
+        	with open('logf.txt') as f:
+        		f.write(time.time())
+        #
+        # 
+        #
     elif (top[3]=='X') and (top[4]=='request'):
         read_from_db_messapp(msg.topic, msg.payload)
     else:
