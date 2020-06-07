@@ -20,8 +20,6 @@ TBROKER = "localhost"
 MQTTID  = "pmanager"
 TTOPIC  = "rpired/#"
 
-# Debugging related stuff
-JUST_FOR_DEBUG = True
 
 logging.basicConfig(level=logging.DEBUG, format='[%(levelname)s] [%(threadName)-10s%(message)s',)
 
@@ -82,15 +80,16 @@ def on_connect(mqttc, userdata, flags, rc):
         mqttc.subscribe(TTOPIC, qos=0)
 
 def on_subscribe(mqttc, userdata, mid, granted_qos):
-    if JUST_FOR_DEBUG: sys.stderr.write("[DEBUG:on_subscribe] Subscribed: "+str(mid)+" "+str(granted_qos)+"\n")
+    sys.stderr.write("[DEBUG:on_subscribe] Subscribed: "+str(mid)+" "+str(granted_qos)+"\n")
 
 def on_message(mqttc, userdata, msg):
-    if JUST_FOR_DEBUG: sys.stderr.write("[DEBUG:on_message] Received from %s: '%s', topic: '%s' (qos=%d)\n" % (fb, msg.payload, msg.topic, msg.qos))
+    sys.stderr.write("[DEBUG:on_message] Received from %s: '%s', topic: '%s' (qos=%d)\n" % (fb, msg.payload, msg.topic, msg.qos))
 
     top = msg.topic.split('/')
     if (top[3]=='P'):    # Checking if data must be made persistent
         jrecord = create_json_data(msg.topic, msg.payload)
-        if JUST_FOR_DEBUG: print("PERSISTING :) ", jrecord)
+
+        print("PERSISTING :) ", jrecord)
         try:
             clientIX.write_points(jrecord, database=IXDB, protocol='json')
         except Exception as e:
@@ -113,7 +112,7 @@ def on_message(mqttc, userdata, msg):
         pass # nothing to do
 
 def on_publish(mqttc, userdata, mid):
-    if JUST_FOR_DEBUG: sys.stderr.write("[DEBUG:on_publish] Sent messageid '%d'\n" % mid)
+    sys.stderr.write("[DEBUG:on_publish] Sent messageid '%d'\n" % mid)
 
 
 
