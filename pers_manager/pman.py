@@ -21,7 +21,9 @@ MQTTID  = "pmanager"
 TTOPIC  = "rpired/#"
 
 # Debugging related stuff
-DEBUG_MSG_ON = True
+DEBUG_MSG_ON = False
+
+JUST_FOR_DEBUG = True
 
 logging.basicConfig(level=logging.DEBUG, format='[%(levelname)s] [%(threadName)-10s%(message)s',)
 
@@ -48,15 +50,14 @@ def read_from_db_messapp(topic, payload):
 
 
 def create_json_data(topic, payload):
-    global DEBUG_MSG_ON
-    
+
     print("TEST1")
-    print(DEBUG_MSG_ON)
-    if DEBUG_MSG_ON: print(topic, payload)
+    print(JUST_FOR_DEBUG)
+    if JUST_FOR_DEBUG: print(topic, payload)
     pload = json.loads(payload)
     top = topic.split('/')
-    # if DEBUG_MSG_ON: print(top)
-    if DEBUG_MSG_ON: print(pload)
+    if JUST_FOR_DEBUG: print(top)
+    if JUST_FOR_DEBUG: print(pload)
     print("TEST2")
 
     # Adding a "scope" tag to the record using the <scope> field in the topic
