@@ -22,6 +22,7 @@ TTOPIC  = "rpired/#"
 
 # Debugging related stuff
 DEBUG_MSG_ON = True
+
 logging.basicConfig(level=logging.DEBUG, format='[%(levelname)s] [%(threadName)-10s%(message)s',)
 
 def read_from_db_messapp(topic, payload):
@@ -47,11 +48,13 @@ def read_from_db_messapp(topic, payload):
 
 
 def create_json_data(topic, payload):
+    print("TEST1")
     if DEBUG_MSG_ON: print(topic, payload)
     pload = json.loads(payload)
     top = topic.split('/')
     if DEBUG_MSG_ON: print(top)
     if DEBUG_MSG_ON: print(pload)
+    print("TEST2")
 
     # Adding a "scope" tag to the record using the <scope> field in the topic
     # Used by the "content forwarder"
