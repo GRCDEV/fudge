@@ -21,7 +21,7 @@ MQTTID  = "pmanager"
 TTOPIC  = "rpired/#"
 
 # Debugging related stuff
-DEBUG_MSG_ON = False
+DEBUG_MSG_ON = True
 logging.basicConfig(level=logging.DEBUG, format='[%(levelname)s] [%(threadName)-10s%(message)s',)
 
 def read_from_db_messapp(topic, payload):
