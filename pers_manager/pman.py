@@ -48,6 +48,8 @@ def read_from_db_messapp(topic, payload):
 
 
 def create_json_data(topic, payload):
+    global DEBUG_MSG_ON
+    
     print("TEST1")
     print(DEBUG_MSG_ON)
     if DEBUG_MSG_ON: print(topic, payload)
