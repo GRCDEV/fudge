@@ -60,6 +60,13 @@ if __name__ == "__main__":
 
 
     msrts = clientIX.get_list_measurements()
-    print(msrts)
+    for m in msrts:
+        print(m["name"])
+        if m["name"]=="testcs":
+            rs = clientIX.query("SELECT * from "+m["name"])
+            rsp = list(rs.get_points(tags={"scope": "G"}))
+            for k in rsp:
+                print(k)
+
 
 
