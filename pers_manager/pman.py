@@ -1,5 +1,4 @@
 import argparse
-import logging
 import json 
 import sys
 import socket
@@ -20,9 +19,7 @@ TBROKER = "localhost"
 MQTTID  = "pmanager"
 TTOPIC  = "rpired/#"
 
-# Debugging related stuff
-DEBUG_MSG_ON = False
-logging.basicConfig(level=logging.DEBUG, format='[%(levelname)s] [%(threadName)-10s%(message)s',)
+JUST_FOR_DEBUG = True
 
 def read_from_db_messapp(topic, payload):
 
@@ -42,14 +39,20 @@ def read_from_db_messapp(topic, payload):
             }
             jpaylaod = json.dumps(payload)
 
-            print("read_from_db_messapp publishing: ", jpaylaod, " with topic ", topic)
+            if JUST_FOR_DEBUG: print("read_from_db_messapp publishing: ", jpaylaod, " with topic ", topic)
             mqttc.publish(topic, payload=jpaylaod, qos=0, retain=False)
 
 
 def create_json_data(topic, payload):
-    if DEBUG_MSG_ON: print(topic, payload)
+
     pload = json.loads(payload)
-    if DEBUG_MSG_ON: print(pload)
+    if JUST_FOR_DEBUG: print("[DEBUG:create_json_data] pload", pload)
+    top = topic.split('/')
+    if JUST_FOR_DEBUG: print("[DEBUG:create_json_data] top", top)
+
+    # Adding a "scope" tag to the record using the <scope> field in the topic
+    # Used by the "content forwarder"
+    pload["tags"]["scope"]=top[2]
 
     now_time = datetime.now(timezone.utc).astimezone()
 
@@ -62,30 +65,32 @@ def create_json_data(topic, payload):
 
 
 def on_connect(mqttc, userdata, flags, rc):
-    logging.debug("[DEBUG:on_connect] Connected to %s : %d\n" % (mqttc._host, mqttc._port))
     if rc > 0:
         sys.stderr.write("[ERROR:on_connect]: %d - calling on_connect()\n" % rc)
         sys.exit(2)
     else:
+        print("[INFO:on_connect] Connected to broker %s : %d" % (mqttc._host, mqttc._port))
+        print("[INFO:on_connect] Subscribing to topic: ", TTOPIC)
         mqttc.subscribe(TTOPIC, qos=0)
 
 def on_subscribe(mqttc, userdata, mid, granted_qos):
-    if DEBUG_MSG_ON: sys.stderr.write("[DEBUG:on_subscribe] Subscribed: "+str(mid)+" "+str(granted_qos)+"\n")
+    print("[INFO:on_subscribe] Subscribed to topic! "+str(mid)+" "+str(granted_qos))
 
 def on_message(mqttc, userdata, msg):
-    if DEBUG_MSG_ON: sys.stderr.write("[DEBUG:on_message] Received from %s: '%s', topic: '%s' (qos=%d)\n" % (fb, msg.payload, msg.topic, msg.qos))
+    if JUST_FOR_DEBUG: print("[DEBUG:on_message] Received: '%s', topic: '%s' (qos=%d)" % (msg.payload, msg.topic, msg.qos))
 
     top = msg.topic.split('/')
     if (top[3]=='P'):    # Checking if data must be made persistent
         jrecord = create_json_data(msg.topic, msg.payload)
-        if DEBUG_MSG_ON or True: print("PERSISTING :) ", jrecord)
+
+        if JUST_FOR_DEBUG: print("[DEBUG:on_message] storing to DB: ", jrecord)
         try:
             clientIX.write_points(jrecord, database=IXDB, protocol='json')
         except Exception as e:
-            print("Something went wrong during 'write_points' InfluxDB DB")
+            sys.stderr.write("[ERROR] Something went wrong during 'write_points' InfluxDB DB")
             print(e)
         #
-        # to be used by testcs and performance evaluation
+        # used by testcs and performance evaluation
         #
         if (top[1]=='testcs'):
         	tval = time.time() - jrecord[0]["fields"]["tim"]
@@ -101,31 +106,29 @@ def on_message(mqttc, userdata, msg):
         pass # nothing to do
 
 def on_publish(mqttc, userdata, mid):
-    if DEBUG_MSG_ON: sys.stderr.write("[DEBUG:on_publish] Sent messageid '%d'\n" % mid)
+    print("[INFO:on_publish] Sent messageid '%d'\n" % mid)
 
 
 
 if __name__ == "__main__":
 
-    logging.basicConfig(format='%(levelname)s:%(funcName)s:%(lineno)d:%(message)s', level=logging.DEBUG)
-
     # Conecting to the InfluxDB server
     try:
         clientIX = InfluxDBClient(host=IXSERVER, port=8086, username=IXUSER, password=IXPASS, database=IXDB)
     except Exception as e:
-        print("Something went wrong connecting to InfluxDB server")
+        sys.stderr.write("[ERROR] Something went wrong connecting to InfluxDB server")
         print(e.message, e.args)
         sys.exit(2)
-    print("Client connected to InfluxDB server")
+    print("[INFO:main] Client connected to InfluxDB server")
 
     # Creating InfluxDB DB
     try:
         clientIX.create_database(IXDB)
     except Exception as e:
-        print("Something went wrong creating InfluxDB DB")
+        sys.stderr.write("[ERROR] Something went wrong creating InfluxDB DB")
         print(e.message, e.args)
         sys.exit(2)
-    print("Created InfluxDB DB: ", IXDB)
+    print("[INFO:main] Created InfluxDB DB: ", IXDB)
 
     mqttc = mqtt.Client(client_id=MQTTID, clean_session=True, userdata=None)
     mqttc.on_message = on_message
@@ -136,7 +139,7 @@ if __name__ == "__main__":
     # Connect to the MQTT brokers
     mqttc.username_pw_set(None, password=None)
     try:
-        print("Connecting to: ", TBROKER)
+        print("[INFO:main] Connecting to broker: ", TBROKER)
         mqttc.connect(TBROKER, 1883, keepalive=60)
     except socket.error as serr:
         sys.stderr.write("[ERROR] %s\n" % serr)

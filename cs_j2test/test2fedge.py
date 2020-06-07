@@ -10,7 +10,7 @@ import paho.mqtt.client as mqtt
 
 TBROKER = "localhost"
 MQTTID  = "testcs"
-TTOPIC  = "rpired/testcs/L/P"
+TTOPIC  = "rpired/testcs/G/P"
 
 
 def random_chars_string(l=5):
@@ -65,7 +65,8 @@ if __name__ == "__main__":
 
         payload = {
             "measurement": "testcs",
-            "tags": {"devid": devid
+            "tags": {
+                "devid": devid
             },
             "fields": { 
                 "tim": time.time(),
