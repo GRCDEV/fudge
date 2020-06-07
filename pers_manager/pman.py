@@ -65,16 +65,16 @@ def create_json_data(topic, payload):
 
 
 def on_connect(mqttc, userdata, flags, rc):
-    print("[INFO:on_connect] Connected to broker %s : %d\n" % (mqttc._host, mqttc._port))
     if rc > 0:
         sys.stderr.write("[ERROR:on_connect]: %d - calling on_connect()\n" % rc)
         sys.exit(2)
     else:
-        print("[INFO:on_connect] Subscribed to topic: ", TTOPIC)
+        print("[INFO:on_connect] Connected to broker %s : %d" % (mqttc._host, mqttc._port))
+        print("[INFO:on_connect] Subscribing to topic: ", TTOPIC)
         mqttc.subscribe(TTOPIC, qos=0)
 
 def on_subscribe(mqttc, userdata, mid, granted_qos):
-    print("[INFO:on_subscribe] Subscribed to topic: "+str(mid)+" "+str(granted_qos)+"\n")
+    print("[INFO:on_subscribe] Subscribed to topic!"+str(mid)+" "+str(granted_qos)+"\n")
 
 def on_message(mqttc, userdata, msg):
     if JUST_FOR_DEBUG: print("[DEBUG:on_message] Received: '%s', topic: '%s' (qos=%d)\n" % (msg.payload, msg.topic, msg.qos))
@@ -139,7 +139,7 @@ if __name__ == "__main__":
     # Connect to the MQTT brokers
     mqttc.username_pw_set(None, password=None)
     try:
-        print("[INFO:main] Connecting to: ", TBROKER)
+        print("[INFO:main] Connecting to broker: ", TBROKER)
         mqttc.connect(TBROKER, 1883, keepalive=60)
     except socket.error as serr:
         sys.stderr.write("[ERROR] %s\n" % serr)
