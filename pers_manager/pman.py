@@ -67,15 +67,16 @@ def create_json_data(topic, payload):
 
 
 def on_connect(mqttc, userdata, flags, rc):
-    logging.debug("[DEBUG:on_connect] Connected to %s : %d\n" % (mqttc._host, mqttc._port))
+    logging.debug("[DEBUG:on_connect] Connected to broker %s : %d\n" % (mqttc._host, mqttc._port))
     if rc > 0:
         sys.stderr.write("[ERROR:on_connect]: %d - calling on_connect()\n" % rc)
         sys.exit(2)
     else:
+        print("Subscribed to topic: ", TTOPIC)
         mqttc.subscribe(TTOPIC, qos=0)
 
 def on_subscribe(mqttc, userdata, mid, granted_qos):
-    sys.stderr.write("[DEBUG:on_subscribe] Subscribed: "+str(mid)+" "+str(granted_qos)+"\n")
+    sys.stderr.write("[DEBUG:on_subscribe] Subscribed to topic: "+str(mid)+" "+str(granted_qos)+"\n")
 
 def on_message(mqttc, userdata, msg):
     sys.stderr.write("[DEBUG:on_message] Received from %s: '%s', topic: '%s' (qos=%d)\n" % (fb, msg.payload, msg.topic, msg.qos))
