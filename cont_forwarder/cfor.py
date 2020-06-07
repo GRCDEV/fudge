@@ -59,7 +59,7 @@ if __name__ == "__main__":
     print("[INFO:main] Set InfluxDB DB: ", IXDB)
 
 
-	msrts = clientIX.get_list_measurements()
-	print(msrts)
+    msrts = clientIX.get_list_measurements()
+    print(msrts)
 
 
