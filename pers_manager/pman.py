@@ -49,7 +49,13 @@ def read_from_db_messapp(topic, payload):
 def create_json_data(topic, payload):
     if DEBUG_MSG_ON: print(topic, payload)
     pload = json.loads(payload)
+    top = topic.split('/')
+    if DEBUG_MSG_ON: print(top)
     if DEBUG_MSG_ON: print(pload)
+
+    # Adding a "scope" tag to the record using the <scope> field in the topic
+    # Used by the "content forwarder"
+    pload["tags"]["scope"]=top[2]
 
     now_time = datetime.now(timezone.utc).astimezone()
 
