@@ -79,7 +79,7 @@ def on_subscribe(mqttc, userdata, mid, granted_qos):
     sys.stderr.write("[DEBUG:on_subscribe] Subscribed to topic: "+str(mid)+" "+str(granted_qos)+"\n")
 
 def on_message(mqttc, userdata, msg):
-    sys.stderr.write("[DEBUG:on_message] Received from %s: '%s', topic: '%s' (qos=%d)\n" % (fb, msg.payload, msg.topic, msg.qos))
+    # sys.stderr.write("[DEBUG:on_message] Received from %s: '%s', topic: '%s' (qos=%d)\n" % (fb, msg.payload, msg.topic, msg.qos))
 
     top = msg.topic.split('/')
     if (top[3]=='P'):    # Checking if data must be made persistent
