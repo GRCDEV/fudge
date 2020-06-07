@@ -46,15 +46,13 @@ def read_from_db_messapp(topic, payload):
 
 
 def create_json_data(topic, payload):
-    LOCAL_DEBUG = True
 
     print("TEST1")
-    print(LOCAL_DEBUG)
-    if LOCAL_DEBUG: print(topic, payload)
+    print(topic, payload)
     pload = json.loads(payload)
     top = topic.split('/')
-    if LOCAL_DEBUG: print(top)
-    if LOCAL_DEBUG: print(pload)
+    print(top)
+    print(pload)
     print("TEST2")
 
     # Adding a "scope" tag to the record using the <scope> field in the topic
