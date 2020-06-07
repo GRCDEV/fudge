@@ -48,12 +48,10 @@ def read_from_db_messapp(topic, payload):
 
 def create_json_data(topic, payload):
 
-    print("TEST1")
     pload = json.loads(payload)
-    if JUST_FOR_DEBUG: print(pload)
+    if JUST_FOR_DEBUG: print("DEBUG create_json_data", pload)
     top = topic.split('/')
-    if JUST_FOR_DEBUG: print(top)
-    print("TEST2")
+    if JUST_FOR_DEBUG: print("DEBUG create_json_data", top)
 
     # Adding a "scope" tag to the record using the <scope> field in the topic
     # Used by the "content forwarder"
