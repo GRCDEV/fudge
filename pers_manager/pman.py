@@ -21,7 +21,7 @@ MQTTID  = "pmanager"
 TTOPIC  = "rpired/#"
 
 # Debugging related stuff
-DEBUG_MSG_ON = False
+DEBUG_MSG_ON = True
 
 logging.basicConfig(level=logging.DEBUG, format='[%(levelname)s] [%(threadName)-10s%(message)s',)
 
@@ -52,7 +52,7 @@ def create_json_data(topic, payload):
     if DEBUG_MSG_ON: print(topic, payload)
     pload = json.loads(payload)
     top = topic.split('/')
-    if DEBUG_MSG_ON: print(top)
+    # if DEBUG_MSG_ON: print(top)
     if DEBUG_MSG_ON: print(pload)
     print("TEST2")
 
