@@ -74,10 +74,10 @@ def on_connect(mqttc, userdata, flags, rc):
         mqttc.subscribe(TTOPIC, qos=0)
 
 def on_subscribe(mqttc, userdata, mid, granted_qos):
-    print("[INFO:on_subscribe] Subscribed to topic!"+str(mid)+" "+str(granted_qos)+"\n")
+    print("[INFO:on_subscribe] Subscribed to topic! "+str(mid)+" "+str(granted_qos))
 
 def on_message(mqttc, userdata, msg):
-    if JUST_FOR_DEBUG: print("[DEBUG:on_message] Received: '%s', topic: '%s' (qos=%d)\n" % (msg.payload, msg.topic, msg.qos))
+    if JUST_FOR_DEBUG: print("[DEBUG:on_message] Received: '%s', topic: '%s' (qos=%d)" % (msg.payload, msg.topic, msg.qos))
 
     top = msg.topic.split('/')
     if (top[3]=='P'):    # Checking if data must be made persistent
