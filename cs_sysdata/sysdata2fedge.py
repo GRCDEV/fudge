@@ -63,6 +63,6 @@ if __name__ == "__main__":
 
         mqttc.publish(TTOPIC, payload=jpaylaod, qos=0, retain=False)
 
-        time.sleep(5)
+        time.sleep(15)
 
     mqttc.loop_stop()
