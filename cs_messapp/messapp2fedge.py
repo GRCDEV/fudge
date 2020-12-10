@@ -30,7 +30,7 @@ def on_connect(client, userdata, flags, rc):
         print("[ERROR:on_connect]: %d - calling on_connect()\n" % (rc))
         sys.exit(2)
     else:
-        client.subscribe('rpired/messapp/G/X/response', qos=0)
+        client.subscribe('rpired/messapp/L/X/response', qos=0)
 
 def on_message(mqttc, userdata, msg):
     global inmessages
@@ -166,7 +166,7 @@ def sendmsg():
 
         print("messapp data: ", jpaylaod)
 
-        mqttc.publish('rpired/messapp/G/P', payload=jpaylaod, qos=0, retain=False)
+        mqttc.publish('rpired/messapp/L/P', payload=jpaylaod, qos=0, retain=False)
         mqttc.loop_stop()
 
         return redirect(request.url)
@@ -190,7 +190,7 @@ def getmsg():
         jpaylaod = json.dumps(payload)
 
         mqttc.loop_start()
-        mqttc.publish('rpired/messapp/G/X/request', payload=jpaylaod, qos=0, retain=False)
+        mqttc.publish('rpired/messapp/L/X/request', payload=jpaylaod, qos=0, retain=False)
         time.sleep(5) # giving time for messages to come
         print("inmessages", inmessages)
         mqttc.loop_stop()
