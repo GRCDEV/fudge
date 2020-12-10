@@ -40,6 +40,8 @@ def on_message(mqttc, userdata, msg):
     pload = json.loads(msg.payload)
     inmessages.append(pload)
 
+def on_publish(mqttc, userdata, msg):
+    print("[DEBUG:on_publish] published: '%s', topic: '%s'\n" % (msg.payload, msg.topic))
 
 app = Flask(__name__)
 app.secret_key = "socciacheduemaroni"
@@ -233,6 +235,8 @@ if __name__ == "__main__":
         mqttc = mqtt.Client(client_id=MQTTID, clean_session=True)
         mqttc.on_connect = on_connect
         mqttc.on_message = on_message
+        mqttc.on_publish = on_publish
+
         mqttc.username_pw_set(None, password=None)
         mqttc.connect(TBROKER, port=1883, keepalive=60)
     except Exception as e:
