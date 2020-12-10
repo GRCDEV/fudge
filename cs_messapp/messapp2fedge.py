@@ -156,7 +156,7 @@ def sendmsg():
 
         destination = request.form["destination"]
         message = request.form["message"]
-        mqttc.loop_start()
+        
         payload = {
             "measurement": "messapp",
             "tags": {"sender": session["user"], "destination": destination},
@@ -166,6 +166,7 @@ def sendmsg():
 
         print("messapp data: ", jpaylaod)
 
+        mqttc.loop_start()
         mqttc.publish('rpired/messapp/L/P', payload=jpaylaod, qos=0, retain=False)
         mqttc.loop_stop()
 
