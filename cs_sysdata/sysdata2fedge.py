@@ -5,6 +5,7 @@ import json
 import os
 import paho.mqtt.client as mqtt
 
+FREQ = 60
 TBROKER = "localhost"
 MQTTID  = "sysdata"
 TTOPIC  = "rpired/sysdata/L/P"
@@ -63,6 +64,6 @@ if __name__ == "__main__":
 
         mqttc.publish(TTOPIC, payload=jpaylaod, qos=0, retain=False)
 
-        time.sleep(15)
+        time.sleep(FREQ)
 
     mqttc.loop_stop()
