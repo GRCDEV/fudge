@@ -52,8 +52,8 @@ def on_message(client, userdata, msg):
 			"devid": "barani_ws"
 		},
 		"fields": {
-			"humi": humi
-			"irra": irra
+			"humi": humi,
+			"irra": irra,
 			"pres": pres, 
 			"temp": temp, 
 		}
