@@ -24,10 +24,10 @@ def on_connect(client, userdata, flags, rc):
 
 # The callback for when a PUBLISH message is received from the server.
 def on_message(client, userdata, msg):
-
-	fclient  = userdata # fudge client
 	themsg   = json.loads(msg.payload.decode("utf-8"))
     print(themsg)
+	
+	fclient  = userdata # fudge client
 
 # {
 #   "Battery": 4.15,
@@ -78,7 +78,7 @@ if __name__ == "__main__":
 		print("Something went wrong connecting to the MQTT broker")
 		print(e)
 		sys.exit(2)
-	print("Client connected to MQTT broker", TBROKER)
+	print("Client connected to local broker")
 
 	try:
 		clientTT = mqtt.Client()
@@ -91,7 +91,7 @@ if __name__ == "__main__":
 		print("Something went wrong connecting to TTN_BROKER")
 		print(e.message, e.args)
 	finally:
-		print("Connected to TTN_BROKER: ", TTN_BROKER)
+		print("Client connected to TTN_BROKER: ", TTN_BROKER)
 
 
 	clientTT.loop_forever()
