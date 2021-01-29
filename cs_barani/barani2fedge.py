@@ -27,6 +27,7 @@ def on_message(client, userdata, msg):
 
 	fclient  = userdata # fudge client
 	themsg   = json.loads(msg.payload.decode("utf-8"))
+    print(themsg)
 
 # {
 #   "Battery": 4.15,
