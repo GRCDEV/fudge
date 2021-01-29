@@ -82,12 +82,13 @@ if __name__ == "__main__":
 		clientTT.on_message = on_message
 		clientTT.username_pw_set(TTN_USER, password=TTN_PASS)
 		clientTT.connect(TTN_BROKER, 1883, 60)
-		clientTT.loop_start()
 	except Exception as e:
 		print("Something went wrong connecting to TTN_BROKER")
 		print(e.message, e.args)
 		sys.exit(2)
 	finally:
 		print("Client connected to TTN_BROKER: ", TTN_BROKER)
+
+	clientTT.loop_forever()
 
 
