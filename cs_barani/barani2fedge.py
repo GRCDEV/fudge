@@ -15,16 +15,15 @@ TTN_PASS   = "ttn-account-v2.VL4XZUiF9gIsrJDiCWZU6ZmnW_SM3LIf4Jx65KMxQWQ" # the 
 
 FREQ = 60
 TBROKER = "localhost"
-MQTTID  = "barani"
 TTOPIC  = "rpired/barani/L/P"
-
-# The callback for when the client receives a CONNACK response from the server.
-def on_connectTTN(client, userdata, flags, rc):
-	client.subscribe(TTN_TOPIC)
 
 # The callback for when the client receives a CONNACK response from the server.
 def on_connectFUDGE(client, userdata, flags, rc):
     print("Flags: ", flags, "returned code: ", rc)
+
+# The callback for when the client receives a CONNACK response from the server.
+def on_connectTTN(client, userdata, flags, rc):
+	client.subscribe(TTN_TOPIC)
 
 # The callback for when a PUBLISH message is received from the server.
 def on_message(client, userdata, msg):
@@ -66,7 +65,7 @@ def on_message(client, userdata, msg):
 if __name__ == "__main__":
 
 	try:
-		mqttc = mqtt.Client(client_id=MQTTID, clean_session=True)
+		mqttc = mqtt.Client()
 		mqttc.on_connect = on_connectFUDGE
 		mqttc.username_pw_set(None, password=None)
 		mqttc.connect(TBROKER, port=1883, keepalive=60)
