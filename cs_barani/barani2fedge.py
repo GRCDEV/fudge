@@ -58,11 +58,7 @@ def on_message(client, userdata, msg):
 
 	print("barani data: ", jpaylaod)
 
-	mqttc.loop_start()			
-	time.sleep(2)
 	mqttc.publish(TTOPIC, payload=jpaylaod, qos=0, retain=False)
-	time.sleep(2)
-	mqttc.loop_stop()
 
 
 if __name__ == "__main__":
@@ -72,11 +68,13 @@ if __name__ == "__main__":
 		mqttc.on_connect = on_connectFUDGE
 		mqttc.username_pw_set(None, password=None)
 		mqttc.connect(TBROKER, port=1883, keepalive=60)
+        mqttc.loop_start()
 	except Exception as e:
 		print("Something went wrong connecting to the MQTT broker")
 		print(e)
 		sys.exit(2)
-	print("Client connected to local broker")
+    finally:
+    	print("Client connected to local broker")
 
 	try:
 		clientTT = mqtt.Client()
@@ -84,11 +82,12 @@ if __name__ == "__main__":
 		clientTT.on_message = on_message
 		clientTT.username_pw_set(TTN_USER, password=TTN_PASS)
 		clientTT.connect(TTN_BROKER, 1883, 60)
+        clientTT.loop_start()
 	except Exception as e:
 		print("Something went wrong connecting to TTN_BROKER")
 		print(e.message, e.args)
+        sys.exit(2)
 	finally:
 		print("Client connected to TTN_BROKER: ", TTN_BROKER)
 
 
-	clientTT.loop_forever()
