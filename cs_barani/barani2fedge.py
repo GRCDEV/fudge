@@ -25,7 +25,7 @@ def on_connect(client, userdata, flags, rc):
 # The callback for when a PUBLISH message is received from the server.
 def on_message(client, userdata, msg):
 	themsg   = json.loads(msg.payload.decode("utf-8"))
-    print(themsg)
+	print(themsg)
 	
 	fclient  = userdata # fudge client
 
