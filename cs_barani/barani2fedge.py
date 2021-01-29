@@ -68,13 +68,13 @@ if __name__ == "__main__":
 		mqttc.on_connect = on_connectFUDGE
 		mqttc.username_pw_set(None, password=None)
 		mqttc.connect(TBROKER, port=1883, keepalive=60)
-        mqttc.loop_start()
+		mqttc.loop_start()
 	except Exception as e:
 		print("Something went wrong connecting to the MQTT broker")
 		print(e)
 		sys.exit(2)
-    finally:
-    	print("Client connected to local broker")
+	finally:
+		print("Client connected to local broker")
 
 	try:
 		clientTT = mqtt.Client()
@@ -82,11 +82,11 @@ if __name__ == "__main__":
 		clientTT.on_message = on_message
 		clientTT.username_pw_set(TTN_USER, password=TTN_PASS)
 		clientTT.connect(TTN_BROKER, 1883, 60)
-        clientTT.loop_start()
+		clientTT.loop_start()
 	except Exception as e:
 		print("Something went wrong connecting to TTN_BROKER")
 		print(e.message, e.args)
-        sys.exit(2)
+		sys.exit(2)
 	finally:
 		print("Client connected to TTN_BROKER: ", TTN_BROKER)
 
