@@ -24,10 +24,11 @@ def on_connect(client, userdata, flags, rc):
 
 # The callback for when a PUBLISH message is received from the server.
 def on_message(client, userdata, msg):
+    global cli_con
+    global rec_15m
+    global sen_15m
     themsg   = json.loads(msg.payload.decode("utf-8"))
-    print(msg.topic)
-    print(msg.payload)
-    print(themsg)
+
     if ("clients/connected" in msg.topic):
         cli_con = int(themsg)
     if ("received/15min" in msg.topic):
