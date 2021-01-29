@@ -19,7 +19,7 @@ TTOPIC  = "rpired/barani/L/P"
 
 # The callback for when the client receives a CONNACK response from the server.
 def on_connectFUDGE(client, userdata, flags, rc):
-    print("Flags: ", flags, "returned code: ", rc)
+	print("Flags: ", flags, "returned code: ", rc)
 
 # The callback for when the client receives a CONNACK response from the server.
 def on_connectTTN(client, userdata, flags, rc):
@@ -58,8 +58,9 @@ def on_message(client, userdata, msg):
 
 	print("barani data: ", jpaylaod)
 
+	mqttc.loop_start()			
 	mqttc.publish(TTOPIC, payload=jpaylaod, qos=0, retain=False)
-
+	mqttc.loop_stop()
 
 
 if __name__ == "__main__":
