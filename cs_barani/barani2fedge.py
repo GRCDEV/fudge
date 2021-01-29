@@ -59,7 +59,9 @@ def on_message(client, userdata, msg):
 	print("barani data: ", jpaylaod)
 
 	mqttc.loop_start()			
+	time.sleep(2)
 	mqttc.publish(TTOPIC, payload=jpaylaod, qos=0, retain=False)
+	time.sleep(2)
 	mqttc.loop_stop()
 
 
