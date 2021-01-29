@@ -31,30 +31,22 @@ def on_message(client, userdata, msg):
 	themsg   = json.loads(msg.payload.decode("utf-8"))
 	print(themsg)
 	
-	fclient  = userdata # fudge client
 
-# {
-#   "Battery": 4.15,
-#   "Humidity": 44.2,
-#   "Irr_max": 0,
-#   "Irradiation": 0,
-#   "Pressure": 101575,
-#   "Rain": 0,
-#   "Rain min time": 255,
-#   "T_max": 24,
-#   "T_min": 24,
-#   "Temperature": 24,
-#   "Type": 1
-# }
-	humi = themsg["Humidity"]
-	irra = themsg["Irradiation"]
-	pres = themsg["Pressure"]
-	temp = themsg["Temperature"]
+	fclient  = userdata # fudge 
+
+# {'app_id': 'barani_ws', 'dev_id': 'meteohelix049', 'hardware_serial': '0004A30B00F2CE16', 'port': 1, 'counter': 1548, 'payload_raw': 'by4BBbtC2DoBAP8=', 'payload_fields': {'Battery': 4.15, 'Humidity': 44.2, 'Irr_max': 60, 'Irradiation': 58, 'Pressure': 101655, 'Rain': 0, 'Rain min time': 255, 'T_max': 20.9, 'T_min': 20.7, 'Temperature': 20.8, 'Type': 1}, 'metadata': {'time': '2021-01-29T09:30:51.438054513Z', 'frequency': 868.3, 'modulation': 'LORA', 'data_rate': 'SF12BW125', 'airtime': 1482752000, 'coding_rate': '4/5', 'gateways': [{'gtw_id': 'eui-b827ebfffe7fe28a', 'timestamp': 3561139820, 'time': '2021-01-29T09:30:51.410093Z', 'channel': 1, 'rssi': -73, 'snr': 5.2, 'rf_chain': 0, 'latitude': 39.48262, 'longitude': -0.34657, 'altitude': 10}, {'gtw_id': 'eui-b827ebfffe336296', 'timestamp': 3453459404, 'time': '', 'channel': 1, 'rssi': -49, 'snr': 6.8, 'rf_chain': 0}]}}
+
+
+	dvid = themsg["dev_id"]
+	humi = themsg["payload_fields"]["Humidity"]
+	irra = themsg["payload_fields"]["Irradiation"]
+	pres = themsg["payload_fields"]["Pressure"]
+	temp = themsg["payload_fields"]["Temperature"]
 
 	payload = {
 		"measurement": "barani",
 		"tags": {
-			"devid": "barani_ws"
+			"devid": dvid
 		},
 		"fields": {
 			"humi": humi,
