@@ -22,7 +22,7 @@ def on_connectFUDGE(client, userdata, flags, rc):
 
 # The callback for when the client receives a CONNACK response from the server.
 def on_connectTTN(client, userdata, flags, rc):
-    print("Flags: ", flags, "returned code: ", rc)
+	print("Flags: ", flags, "returned code: ", rc)
 	client.subscribe(TTN_TOPIC)
 
 # The callback for when a PUBLISH message is received from the server.
@@ -79,7 +79,7 @@ if __name__ == "__main__":
 		clientTT = mqtt.Client()
 		clientTT.on_connect = on_connectTTN
 		clientTT.on_message = on_message
-        clientTT.user_data_set(mqttc)
+		clientTT.user_data_set(mqttc)
 		clientTT.username_pw_set(TTN_USER, password=TTN_PASS)
 		clientTT.connect(TTN_BROKER, 1883, 60)
 	except Exception as e:
