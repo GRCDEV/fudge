@@ -12,10 +12,9 @@ We use as a reference a Raspberry Pi 3B.
 The basic instalation consists of:
 
 * [mosquitto broker](https://mosquitto.org)
-- we are currently using mosquitto version 1.5.7
-
-
-- Paho-mqtt installato
+    - we are currently using mosquitto version 1.5.7
+* Python3 (typically already available in the current raspberry distibution)
+    - [paho-mqtt](https://pypi.org/project/paho-mqtt/) library has to be installed
 
 Docker
 - https://www.raspberrypi.org/blog/docker-comes-to-raspberry-pi/
