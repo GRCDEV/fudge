@@ -15,6 +15,6 @@ The basic instalation consists of:
     - we are currently using mosquitto version 1.5.7
 * Python3 (typically already available in the current raspberry distibution)
     - [paho-mqtt](https://pypi.org/project/paho-mqtt/) library has to be installed
-* Docker (- )https://www.raspberrypi.org/blog/docker-comes-to-raspberry-pi/)
+* [Docker](https://www.raspberrypi.org/blog/docker-comes-to-raspberry-pi/)
     - curl -sSL https://get.docker.com | sh
     - sudo usermod -aG docker pi
