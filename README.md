@@ -23,26 +23,17 @@ The basic componentes to be executed are:
 
 * Mosquitto broker
     - check if active: $ systemctl status mosquitto
-
 * influxDB
     > https://songrgg.github.io/operation/influxdb-command-cheatsheet/
     - $ docker run -d -p 8086:8086  -v $PWD:/var/lib/influxdb --name=influxdb influxdb
-        * restart: $ docker start influxdb
-        * access with: 
-            - $ docker exec -it influxdb influx
-        
+    * restart: $ docker start influxdb
+    * access with: $ docker exec -it influxdb influx        
 * Grafana
+    > https://hackmd.io/2Ou5NfDHQfetCvhsWKJQMw#Step-2-processing-and-visualizing-data
     - $ docker run -d --name=grafana -p 3000:3000 grafana/grafana-arm32v7-linux:dev-musl 
     * restart: $ docker start grafana
-- Accesso da browser: 
-    - http://158.42.55.3:3000/login
-    - admin / pietro
-
-- https://hackmd.io/2Ou5NfDHQfetCvhsWKJQMw#Step-2-processing-and-visualizing-data
-
-
-Execute the persistency manager
-* $ cd /home/pi/fudge
-* $ p3 pman.py  > /dev/null &
-- $ p3 pman.py 
+    - Access from browser: 
+        - http://158.42.55.3:3000/login
+* Execute the persistency manager
+    * $ python3 pman.py
 
