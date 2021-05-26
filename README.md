@@ -37,3 +37,12 @@ The basic components to be executed are:
 * Execute the persistency manager
     * $ python3 pman.py
 
+## Basic content sources
+
+We provide two basic "content sources" so to understand the basic structure of the code when adding any of these. 
+
+### cs_sysdata
+Gets some basic statistics about the FUDGE hardware (the Raspberry Pi)
+
+### cs_localbroker
+Gets some basic statistics about the Mosquitto broker.
