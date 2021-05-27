@@ -1,6 +1,6 @@
-# FUDGE: a frugal edge node for IoT deployment in remote areas
+# FUDGE: a frugal edge node for IoT deployment in remote areas (v2.0)
 
-> upgrading to mosquitto 2.0
+> upgrading to Mosquitto 2.0 and containerizing it
 
 > upgrading to InluxDB 2.0
 
@@ -12,35 +12,22 @@ With FUDGE, we introduce an edge/fog generic architecture to allow the adoption 
 
 More details here: https://dl.acm.org/doi/10.1145/3410670.3410857
 
-## Installing a basic FUDGE
-We use as a reference a Raspberry Pi 3B.
+## Required environment to execute a FUDGE
 
-The basic installation consists of:
+The required environment to execute a FUDGE consists of:
 
-* [mosquitto broker](https://mosquitto.org)
-    - we are currently using mosquitto version 1.5.7
-* Python3 (typically already available in the current raspberry distibution)
+* Python3 (typically already available in the current Raspberry distributions), plus:
     - [paho-mqtt](https://pypi.org/project/paho-mqtt/) library has to be installed
-* [Docker](https://www.raspberrypi.org/blog/docker-comes-to-raspberry-pi/)
+    - [influxdb](https://pypi.org/project/influxdb/) library has to be installed
+* [Docker](https://docs.docker.com/get-docker/), for [Raspberry Pi](https://www.raspberrypi.org/blog/docker-comes-to-raspberry-pi/)
     - curl -sSL https://get.docker.com | sh
     - sudo usermod -aG docker pi
 
-The basic components to be executed are:
-
-* Mosquitto broker
-    - check if active: $ systemctl status mosquitto
+The basic components to be executed are handled by `docker-compose up`; the details in file `docker-compose.yml`* Mosquitto broker
 * influxDB
-    > https://songrgg.github.io/operation/influxdb-command-cheatsheet/
-    - $ docker run -d -p 8086:8086  -v $PWD:/var/lib/influxdb --name=influxdb influxdb
-    * restart: $ docker start influxdb
-    * access with: $ docker exec -it influxdb influx        
 * Grafana
-    > https://hackmd.io/2Ou5NfDHQfetCvhsWKJQMw#Step-2-processing-and-visualizing-data
-    - $ docker run -d --name=grafana -p 3000:3000 grafana/grafana-arm32v7-linux:dev-musl 
-    * restart: $ docker start grafana
-    - Access from browser: 
-        - http://158.42.55.3:3000/login
-* Execute the persistency manager
+
+Finally, the persistency manager, must be executed:
     * $ python3 pman.py
 
 ## Basic content sources
