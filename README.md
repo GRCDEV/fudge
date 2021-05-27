@@ -1,7 +1,9 @@
 # FUDGE: a frugal edge node for IoT deployment in remote areas
 
 > upgrading to mosquitto 2.0
+
 > upgrading to InluxDB 2.0
+
 > orchestrating startup with Docker Compose
 
 The growing connection between the Internet of Things (IoT) and Artificial Intelligence (AI) poses many challenges that require novel approaches and even a rethinking of the entire communication and processing architecture to meet new requirements for latency, reliability, power consumption and resource usage. Edge computing  is a promising approach to meet these challenges that can also be beneficial in delivering advanced AI-based IoT solutions in areas where connectivity is scarce and resources are generally limited.
