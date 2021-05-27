@@ -27,14 +27,15 @@ The required environment to execute a FUDGE consists of:
         - `sudo usermod -aG docker pi`
 
 ## Starting up the basic modules
-The basic components to be executed are handled by `docker compose up`: 
+The basic components to be executed are handled by `docker compose up`, these are: 
 * Mosquitto broker
 * influxDB
 * Grafana
+
 the details can be found in file `docker-compose.yml`
 
 Finally, the persistency manager, must be executed manually:
-    * $ python3 pman.py
+* $ python3 pman.py
 
 ## Basic content sources
 
