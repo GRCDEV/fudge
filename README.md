@@ -18,7 +18,9 @@ The required environment to execute a FUDGE consists of:
 
 * Python3 (typically already available in the current Raspberry distributions), plus:
     - [paho-mqtt](https://pypi.org/project/paho-mqtt/) library has to be installed
-    - [influxdb](https://pypi.org/project/influxdb/) library has to be installed
+    - python [influxdb client](https://github.com/influxdata/influxdb-client-python) library has to be installed
+        * pip3 install influxdb-client
+        * https://www.influxdata.com/blog/getting-started-with-python-and-influxdb-v2-0/
 * [Docker](https://docs.docker.com/get-docker/), for [Raspberry Pi](https://www.raspberrypi.org/blog/docker-comes-to-raspberry-pi/)
     - curl -sSL https://get.docker.com | sh
     - sudo usermod -aG docker pi

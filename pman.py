@@ -8,15 +8,20 @@ import time
 import csv
 import paho.mqtt.client as mqtt
 from datetime import datetime, timezone
-from influxdb import InfluxDBClient
+#pre2.0# from influxdb import InfluxDBClient
+from influxdb_client import InfluxDBClient, Point
 
-IXSERVER = "localhost"
+IXSERVER = "http://localhost:8086"
+IXORG    = "fudge"
+IXTOKEN  = "ilikepiadina"
+IXBUCKET = "fudgedb"
 IXDB     = "fudgedb"
-IXUSER   = None
-IXPASS   = None
 
-TBROKER = "localhost"
+BROKER  = "localhost"
+BUSER   = "fudgeuser"
+BPAWD   = "fudgepass"
 MQTTID  = "pmanager"
+
 TTOPIC  = "rpired/#"
 
 JUST_FOR_DEBUG = True
@@ -114,21 +119,23 @@ if __name__ == "__main__":
 
     # Conecting to the InfluxDB server
     try:
-        clientIX = InfluxDBClient(host=IXSERVER, port=8086, username=IXUSER, password=IXPASS, database=IXDB)
+#pre2.0# clientIX = InfluxDBClient(host=IXSERVER, port=8086, username=IXUSER, password=IXPASS, database=IXDB)
+        clientIX = InfluxDBClient(url=IXSERVER, token=IXTOKEN, org=IXORG)
     except Exception as e:
         sys.stderr.write("[ERROR] Something went wrong connecting to InfluxDB server")
         print(e.message, e.args)
         sys.exit(2)
     print("[INFO:main] Client connected to InfluxDB server")
 
-    # Creating InfluxDB DB
+    # instantiating the WriteAPI and QueryAPI
     try:
-        clientIX.create_database(IXDB)
+        IXwrite_api = clientIX.write_api()
+        IXquery_api = clientIX.query_api()
     except Exception as e:
-        sys.stderr.write("[ERROR] Something went wrong creating InfluxDB DB")
+        sys.stderr.write("[ERROR] Something went instantiating the IX WriteAPI and QueryAPI")
         print(e.message, e.args)
         sys.exit(2)
-    print("[INFO:main] Created InfluxDB DB: ", IXDB)
+    print("[INFO:main] instantiated the IX WriteAPI and QueryAPI")
 
     mqttc = mqtt.Client(client_id=MQTTID, clean_session=True, userdata=None)
     mqttc.on_message = on_message
@@ -137,10 +144,10 @@ if __name__ == "__main__":
     mqttc.on_subscribe = on_subscribe
 
     # Connect to the MQTT brokers
-    mqttc.username_pw_set(None, password=None)
+    mqttc.username_pw_set(BUSER, BPAWD)
     try:
-        print("[INFO:main] Connecting to broker: ", TBROKER)
-        mqttc.connect(TBROKER, 1883, keepalive=60)
+        print("[INFO:main] Connecting to broker: ", BROKER)
+        mqttc.connect(BROKER, 1883, keepalive=60)
     except socket.error as serr:
         sys.stderr.write("[ERROR] %s\n" % serr)
         sys.exit(2)
