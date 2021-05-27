@@ -16,20 +16,24 @@ More details here: https://dl.acm.org/doi/10.1145/3410670.3410857
 
 The required environment to execute a FUDGE consists of:
 
-* Python3 (typically already available in the current Raspberry distributions), plus:
-    - [paho-mqtt](https://pypi.org/project/paho-mqtt/) library has to be installed
-    - python [influxdb client](https://github.com/influxdata/influxdb-client-python) library has to be installed
-        * pip3 install influxdb-client
-        * https://www.influxdata.com/blog/getting-started-with-python-and-influxdb-v2-0/
-* [Docker](https://docs.docker.com/get-docker/), for [Raspberry Pi](https://www.raspberrypi.org/blog/docker-comes-to-raspberry-pi/)
-    - curl -sSL https://get.docker.com | sh
-    - sudo usermod -aG docker pi
+* Python3 (typically already available in the current Raspberry distributions), plus must be installed:
+    - the [paho-mqtt](https://pypi.org/project/paho-mqtt/) library;
+    - the Python [influxdb client](https://github.com/influxdata/influxdb-client-python) library.
+        * More infos here: https://www.influxdata.com/blog/getting-started-with-python-and-influxdb-v2-0/
+        * basically done with: `pip3 install influxdb-client` 
+* [Docker](https://docs.docker.com/get-docker/) platform.
+    - The instructions for the [Raspberry Pi](https://www.raspberrypi.org/blog/docker-comes-to-raspberry-pi/), basically:
+        - `curl -sSL https://get.docker.com | sh`
+        - `sudo usermod -aG docker pi`
 
-The basic components to be executed are handled by `docker-compose up`; the details in file `docker-compose.yml`* Mosquitto broker
+## Starting up the basic modules
+The basic components to be executed are handled by `docker compose up`: 
+* Mosquitto broker
 * influxDB
 * Grafana
+the details can be found in file `docker-compose.yml`
 
-Finally, the persistency manager, must be executed:
+Finally, the persistency manager, must be executed manually:
     * $ python3 pman.py
 
 ## Basic content sources
