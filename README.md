@@ -34,6 +34,7 @@ The basic components to be executed are handled by `docker compose up`, these ar
 
 the details can be found in file `docker-compose.yml`
 
+*If you want to run the services in the background add -d. To exit you can press CTRL-C.*
 
 To connect Grafana with InfluxDB, log into Grafana using a web browser:
 * Address: http://127.0.0.1:3000/login
@@ -41,24 +42,17 @@ To connect Grafana with InfluxDB, log into Grafana using a web browser:
 * Password: admin
 
 
+Add the InfluxDB data source as follows: 
 ![](./config/figs/ql.jpg)
 
-When adding a data source the address needs to be: 
 
-`http://pmod:8086` 
+and: 
+![](./config/figs/da.jpg)
 
-and as before: 
-![](https://i.imgur.com/hbeOhER.png)
-
-and click on `Save & Test`. If everything is fine you should see:
-
-![](https://i.imgur.com/l5Msx7V.png)
+and click on `Save & Test`. 
 
 
-*If you want to run the services in the background add -d. To exit you can press CTRL-C.*
-
-
-Finally, the persistency manager, must be executed manually:
+Finally, you must manually execute the persistency manager, :
 * $ python3 pman.py
 
 ## Basic content sources
