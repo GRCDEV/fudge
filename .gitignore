@@ -8,4 +8,4 @@ __pycache__/
 .DS_Store
 
 # FUDGE related
-data/*
+data/*/
