@@ -1,1 +1,1 @@
-This forlder stores the working files and directories of InlufDB and Grafana
+This folder stores the working files and directories of InfluxDB and Grafana

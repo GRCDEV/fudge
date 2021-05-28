@@ -9,3 +9,4 @@ __pycache__/
 
 # FUDGE related
 data/*/
+data/grafana.db
