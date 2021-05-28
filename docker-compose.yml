@@ -17,16 +17,15 @@ services:
             - fudge-net
 
     influxdb:
-        image: influxdb:2.0.6
+        image: influxdb:1.8
         container_name: pmod
         ports:
             - 8086:8086
         environment:
-            DOCKER_INFLUXDB_INIT_USERNAME: "fudge"
-            DOCKER_INFLUXDB_INIT_PASSWORD: "uforobot"
-            DOCKER_INFLUXDB_INIT_ORG: "fudge"
-            DOCKER_INFLUXDB_INIT_BUCKET: "fudgedb"
-            DOCKER_INFLUXDB_INIT_ADMIN_TOKEN: "ilikepiadina"
+            INFLUXDB_DB: "fudgedb"
+            INFLUXDB_ADMIN_ENABLED: "true"
+            INFLUXDB_ADMIN_USER: "fudger"
+            INFLUXDB_ADMIN_PASSWORD: "uforobot"
         volumes:
             - ./data/:/var/lib/influxdb
         networks: 

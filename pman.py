@@ -8,14 +8,12 @@ import time
 import csv
 import paho.mqtt.client as mqtt
 from datetime import datetime, timezone
-#pre2.0# from influxdb import InfluxDBClient
-from influxdb_client import InfluxDBClient, Point
+from influxdb import InfluxDBClient
 
-IXSERVER = "http://localhost:8086"
-IXORG    = "fudge"
-IXTOKEN  = "ilikepiadina"
-IXBUCKET = "fudgedb"
+IXSERVER = "localhost"
 IXDB     = "fudgedb"
+IXUSER   = None
+IXPASS   = None
 
 BROKER  = "localhost"
 BUSER   = "fudgeuser"
@@ -119,23 +117,21 @@ if __name__ == "__main__":
 
     # Conecting to the InfluxDB server
     try:
-#pre2.0# clientIX = InfluxDBClient(host=IXSERVER, port=8086, username=IXUSER, password=IXPASS, database=IXDB)
-        clientIX = InfluxDBClient(url=IXSERVER, token=IXTOKEN, org=IXORG)
+        clientIX = InfluxDBClient(host=IXSERVER, port=8086, username=IXUSER, password=IXPASS, database=IXDB)
     except Exception as e:
         sys.stderr.write("[ERROR] Something went wrong connecting to InfluxDB server")
         print(e.message, e.args)
         sys.exit(2)
     print("[INFO:main] Client connected to InfluxDB server")
 
-    # instantiating the WriteAPI and QueryAPI
+    # Creating InfluxDB DB
     try:
-        IXwrite_api = clientIX.write_api()
-        IXquery_api = clientIX.query_api()
+        clientIX.create_database(IXDB)
     except Exception as e:
-        sys.stderr.write("[ERROR] Something went instantiating the IX WriteAPI and QueryAPI")
+        sys.stderr.write("[ERROR] Something went wrong creating InfluxDB DB")
         print(e.message, e.args)
         sys.exit(2)
-    print("[INFO:main] instantiated the IX WriteAPI and QueryAPI")
+    print("[INFO:main] Created InfluxDB DB: ", IXDB)
 
     mqttc = mqtt.Client(client_id=MQTTID, clean_session=True, userdata=None)
     mqttc.on_message = on_message
