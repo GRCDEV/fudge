@@ -6,3 +6,6 @@ __pycache__/
 
 # Mac related
 .DS_Store
+
+# FUDGE related
+data/*

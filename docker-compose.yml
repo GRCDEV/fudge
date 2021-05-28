@@ -28,7 +28,7 @@ services:
             DOCKER_INFLUXDB_INIT_BUCKET: "fudgedb"
             DOCKER_INFLUXDB_INIT_ADMIN_TOKEN: "ilikepiadina"
         volumes:
-            - ./data/persistencymod:/var/lib/influxdb
+            - ./data/:/var/lib/influxdb
         networks: 
             - fudge-net
 
@@ -41,7 +41,7 @@ services:
             GF_SECURITY_ADMIN_USER: admin
             GF_SECURITY_ADMIN_PASSWORD: admin
         volumes:
-            - ./data/grafana:/var/lib/grafana
+            - ./data/:/var/lib/grafana
         networks: 
             - fudge-net
 
