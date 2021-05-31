@@ -2,7 +2,7 @@
 
 Version 2.0:
 * upgrading to Mosquitto 2.0 and containerizing it
-* keeping InluxDB 1.8
+* keeping InfluxDB 1.8
 * orchestrating startup with Docker Compose
 
 The growing connection between the Internet of Things (IoT) and Artificial Intelligence (AI) poses many challenges that require novel approaches and even a rethinking of the entire communication and processing architecture to meet new requirements for latency, reliability, power consumption and resource usage. Edge computing  is a promising approach to meet these challenges that can also be beneficial in delivering advanced AI-based IoT solutions in areas where connectivity is scarce and resources are generally limited.
@@ -19,9 +19,8 @@ The required environment to execute a FUDGE consists of:
 
 * Python3 (typically already available in the current Raspberry distributions), plus must be installed:
     - the [paho-mqtt](https://pypi.org/project/paho-mqtt/) library;
-    - the Python [influxdb client](https://github.com/influxdata/influxdb-client-python) library.
-        * More infos here: https://www.influxdata.com/blog/getting-started-with-python-and-influxdb-v2-0/
-        * basically done with: `pip3 install influxdb-client` 
+    - the Python [influxdb client](https://github.com/influxdata/influxdb-python) library.
+        * basically done with: `pip3 install influxdb` 
 * [Docker](https://docs.docker.com/get-docker/) platform.
     - The instructions for the [Raspberry Pi](https://www.raspberrypi.org/blog/docker-comes-to-raspberry-pi/), basically:
         - `curl -sSL https://get.docker.com | sh`
