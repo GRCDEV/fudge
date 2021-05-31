@@ -27,32 +27,33 @@ The required environment to execute a FUDGE consists of:
         - `sudo usermod -aG docker pi`
 
 ## Starting up the basic modules
-The basic components to be executed are handled by `docker compose up`, these are: 
+The basic components are executed with command: `$ docker compose up`
+They are: 
 * Mosquitto broker
 * influxDB
 * Grafana
 
-the details can be found in file `docker-compose.yml`
+*If you want to run the services in the background add -d. To exit you can press CTRL-C.* The details can be found in file `docker-compose.yml`
 
-*If you want to run the services in the background add -d. To exit you can press CTRL-C.*
 
 To connect Grafana with InfluxDB, log into Grafana using a web browser:
 * Address: http://127.0.0.1:3000/login
 * Username: admin
 * Password: admin
 
+_Grafana will require you to change the password._
 
-Add the InfluxDB data source as follows: 
+Add the InfluxDB data source using the following parameters: 
 ![](./config/figs/ql.jpg)
 
 
 and: 
 ![](./config/figs/da.jpg)
 
-and click on `Save & Test`. 
+_password is defined in the `docker-compose.yml`_, and click on `Save & Test`. 
 
 
-Finally, you must manually execute the persistency manager, :
+Finally, you must manually execute the persistency manager:
 * $ python3 pman.py
 
 ## Basic content sources
