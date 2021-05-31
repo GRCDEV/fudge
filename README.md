@@ -1,14 +1,15 @@
 # FUDGE: a frugal edge node for IoT deployment in remote areas (v2.0)
 
-> upgrading to Mosquitto 2.0 and containerizing it
-
-> upgrading to InluxDB 2.0
-
-> orchestrating startup with Docker Compose
+Version 2.0:
+* upgrading to Mosquitto 2.0 and containerizing it
+* keeping InluxDB 1.8
+* orchestrating startup with Docker Compose
 
 The growing connection between the Internet of Things (IoT) and Artificial Intelligence (AI) poses many challenges that require novel approaches and even a rethinking of the entire communication and processing architecture to meet new requirements for latency, reliability, power consumption and resource usage. Edge computing  is a promising approach to meet these challenges that can also be beneficial in delivering advanced AI-based IoT solutions in areas where connectivity is scarce and resources are generally limited.
 
-With FUDGE, we introduce an edge/fog generic architecture to allow the adoption of edge solutions in IoT deployments in poorly connected and resource limited scenarios. To this end, we integrate, using micro-services, an MQTT based system that can collect ingress data, handle their persistency, and coordinate data integration with the cloud using a specific service called aggregator.  The edge stations have a dedicated channel with the aggregator based on LoRa to enable long-range transmissions with low power consumption. Some details of the implementation aspects are described along with some preliminary results. Initial testing of the architecture indicates that it is flexible and robust enough to become an alternative for the deployment of advanced IoT services in resource-constrained contexts.
+With FUDGE, we introduce an edge/fog generic architecture to allow the adoption of edge solutions in IoT deployments in poorly connected and resource limited scenarios. To this end, we integrate, using micro-services, an MQTT based system that can collect ingress data, handle their persistency, and coordinate data integration with the cloud using a specific service called **aggregator**.  
+
+The edge stations have a dedicated channel with the aggregator based on LoRa to enable long-range transmissions with low power consumption. This part of another project called [LoRaCTP.](https://github.com/pmanzoni/loractp)
 
 More details here: https://dl.acm.org/doi/10.1145/3410670.3410857
 
