@@ -6,7 +6,9 @@ import os
 import paho.mqtt.client as mqtt
 
 FREQ = 60
-TBROKER = "localhost"
+BROKER  = "localhost"
+BUSER   = "fudgeuser"
+BPAWD   = "fudgepass"
 MQTTID  = "lbrokdata"
 TTOPIC  = "rpired/lbrokdata/L/P"
 
@@ -42,13 +44,13 @@ if __name__ == "__main__":
         mqttc = mqtt.Client(client_id=MQTTID, clean_session=True)
         mqttc.on_connect = on_connect
         mqttc.on_message = on_message
-        mqttc.username_pw_set(None, password=None)
-        mqttc.connect(TBROKER, port=1883, keepalive=60)
+        mqttc.username_pw_set(BUSER, BPAWD)
+        mqttc.connect(BROKER, port=1883, keepalive=60)
     except Exception as e:
         print("Something went wrong connecting to the MQTT broker")
         print(e)
         sys.exit(2)
-    print("Client connected to MQTT broker", TBROKER)
+    print("Client connected to MQTT broker", BROKER)
 
     mqttc.loop_start()
 
