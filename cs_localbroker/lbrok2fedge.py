@@ -5,12 +5,16 @@ import json
 import os
 import paho.mqtt.client as mqtt
 
-FREQ = 60
 BROKER  = "localhost"
 BUSER   = "fudgeuser"
 BPAWD   = "fudgepass"
-MQTTID  = "lbrokdata"
-TTOPIC  = "rpired/lbrokdata/L/P"
+
+TDEVICE = "tdevice"
+MEASRMT = "lbrokdata"
+
+TTOPIC  = TDEVICE+"/"+MEASRMT+"/L/P"
+
+FREQ = 60
 
 cli_con = -1
 rec_15m = -1
@@ -41,7 +45,7 @@ def on_message(client, userdata, msg):
 if __name__ == "__main__":
 
     try:
-        mqttc = mqtt.Client(client_id=MQTTID, clean_session=True)
+        mqttc = mqtt.Client(client_id=MEASRMT, clean_session=True)
         mqttc.on_connect = on_connect
         mqttc.on_message = on_message
         mqttc.username_pw_set(BUSER, BPAWD)
@@ -57,9 +61,9 @@ if __name__ == "__main__":
     while True:
 
         payload = {
-            "measurement": "lbrokdata",
+            "measurement": MEASRMT,
             "tags": {
-                "devid": "rpired"
+                "devid": TDEVICE
             },
             "fields": {
                 "cli_con": cli_con, 

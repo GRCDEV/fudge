@@ -1,16 +1,21 @@
 import random
 import time
 import json
+import string
+import sys
 
 import paho.mqtt.client as mqtt
 
 BROKER  = "localhost"
 BUSER   = "fudgeuser"
 BPAWD   = "fudgepass"
-MQTTID  = "gendata"
 
-TTOPIC  = "rpired/sysdata/L/P"
-FREQ = 60
+TDEVICE = "tdevice"
+MEASRMT = "gendata"
+
+TTOPIC  = TDEVICE+"/"+MEASRMT+"/L/P"
+FREQ    = 60
+TXTSIZE = 5
 
 
 def gen_rand_string(len=10):
@@ -24,9 +29,8 @@ def on_connect(client, userdata, flags, rc):
 if __name__ == "__main__":
 
     try:
-        mqttc = mqtt.Client(client_id=MQTTID, clean_session=True)
+        mqttc = mqtt.Client(client_id=MEASRMT, clean_session=True)
         mqttc.on_connect = on_connect
-        mqttc.on_message = on_message
         mqttc.username_pw_set(BUSER, BPAWD)
         mqttc.connect(BROKER, port=1883, keepalive=60)
     except Exception as e:
@@ -41,18 +45,18 @@ if __name__ == "__main__":
 
 
         payload = {
-            "measurement": "gendata",
+            "measurement": MEASRMT,
             "tags": {
-                "devid": "rpired"
+                "devid": TDEVICE
             },
             "fields": {
-                "rndstring": CPU_Pct, 
-                "rndnum": temp, 
+                "rndstring": gen_rand_string(TXTSIZE), 
+                "rndnum": random.randint(0,1000) 
             }
         }
         jpaylaod = json.dumps(payload)
 
-        print("Sysdata: ", jpaylaod)
+        print("gendata: ", jpaylaod)
 
         mqttc.publish(TTOPIC, payload=jpaylaod, qos=0, retain=False)
 

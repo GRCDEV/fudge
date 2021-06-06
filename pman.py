@@ -18,9 +18,11 @@ IXPASS   = None
 BROKER  = "localhost"
 BUSER   = "fudgeuser"
 BPAWD   = "fudgepass"
+
+TDEVICE = "tdevice"
 MQTTID  = "pmanager"
 
-TTOPIC  = "rpired/#"
+TTOPIC  = TDEVICE+"/#"
 
 JUST_FOR_DEBUG = True
 
